@@ -1,0 +1,39 @@
+# Optional unified end-to-end orchestration config.
+#
+# This runner calls the same stage implementations used by the stage-specific CLI
+# commands, but records one top-level run directory with deterministic stage subdirs.
+
+run:
+  output_root: "../runs_pipeline"
+  run_id: null
+  random_seed: 0
+  overwrite: false
+  log_level: "INFO"
+  notes: ""
+
+pipeline:
+  steps:
+    - "preprocess_jspsych"
+    - "build_tables"
+    - "analysis_ready"
+
+preprocess_jspsych:
+  enabled: true
+  config_path: "preprocess.yaml"
+
+build_tables:
+  enabled: true
+  config_path: "build_tables.yaml"
+  # Set true when Stage 1 windows should feed Stage 2 dwell_tasks[*].window_data_dir.
+  # Keep false for the packaged demo configs, which point to standalone demo inputs.
+  use_preprocess_windows: false
+
+analysis_ready:
+  enabled: true
+  config_path: "analysis_ready.yaml"
+  # Set true when Stage 3 should consume Stage 2 tables/df_mergedmain.csv and df_runs.csv.
+  use_build_tables_outputs: false
+  # The bundled demo config is intentionally minimal; ingest-only keeps the one-command
+  # demo deterministic across environments.
+  steps:
+    - "ingest_analysis_ready"

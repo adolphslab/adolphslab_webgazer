@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: adolphslab_webgazer
+message: "If you use this software scaffold, please cite it."
+type: software
+authors:
+  - family-names: Adolphs
+    given-names: Lab
+license: MIT
+version: 0.1.0
+date-released: 2026-02-15

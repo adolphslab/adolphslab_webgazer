@@ -1,0 +1,7 @@
+# Config index for this repository.
+# Use these paths as your starting point and copy/edit per project.
+
+preprocess_config: "configs/preprocess.yaml"
+build_tables_config: "configs/build_tables.yaml"
+analysis_ready_config: "configs/analysis_ready.yaml"
+full_pipeline_config: "configs/full_pipeline.yaml"

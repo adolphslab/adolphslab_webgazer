@@ -1,0 +1,56 @@
+# Window CSV -> analysis-ready table template.
+# This file is runnable with the bundled demo inputs under examples/demo_input/.
+
+run:
+  run_id: null
+  random_seed: 0
+  log_level: "INFO"
+  overwrite: false
+
+paths:
+  output_root: "../runs_tables"
+
+dwell_tasks:
+  - task: "task5_pro"
+    window_data_dir: "../examples/demo_input/task5_pro/window_data"
+    video_feats_dir: "../examples/demo_input/video_feats"
+    window_glob: "videoview*.csv"
+    runlist_csv: "../examples/demo_input/runlists/runlist_task5_pro.csv"
+
+  - task: "task5_spark"
+    window_data_dir: "../examples/demo_input/task5_spark/window_data"
+    video_feats_dir: "../examples/demo_input/video_feats"
+    window_glob: "videoview*.csv"
+    runlist_csv: "../examples/demo_input/runlists/runlist_task5_spark.csv"
+
+dwell_options:
+  presence_threshold: 0.5
+  min_run: 1
+  bin_seconds: 0.5
+  include_joint_features: true
+
+  derived_require_speaker_present: true
+  derived_require_speaker_unique: false
+  task5_require_speaker_unique: true
+  include_speaker_not_averted_loose: false
+
+  boundary_mode: "posthoc"
+  boundary_tau: 0.05
+  boundary_power: 1.0
+  save_bin_level: false
+
+cluster:
+  enabled: true
+  pro_task: "task5_pro"
+  spark_task: "task5_spark"
+  use_run_only: true
+  task_prefixes_keep: ["task5_"]
+  # Keep all intended cohorts in the template to avoid accidental silent exclusions.
+  groups_keep: ["Control", "ASD", "SPARK", "NonASD_Psych"]
+  features_keep: ["speaker", "distraction", "averted"]
+  default_bin_seconds: 0.5
+  add_stability_block: false
+  keep_support_counts: true
+  write_spearman_corr: false
+  force_group_by_cohort:
+    SPARK: "SPARK"

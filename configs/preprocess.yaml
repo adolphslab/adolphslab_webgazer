@@ -1,0 +1,67 @@
+# Raw WebGazer preprocessing template.
+# This file is runnable with the bundled demo data under examples/raw_demo/.
+
+run:
+  run_id: null
+  random_seed: 0
+  log_level: "INFO"
+  overwrite: false
+  notes: ""
+
+paths:
+  input_glob: "../examples/raw_demo/*.json"
+  output_root: "../runs_preprocess"
+  windows_subdir: "windows"
+  summary_csv: "preprocess_summary.csv"
+
+filename_parsing:
+  delimiter: "_"
+  id_index: 0
+  session_start: 1
+  session_end: 2
+  id_regex: null
+  session_regex: null
+
+trials:
+  trial_type: "video-keyboard-response"
+  require_webgazer_data: true
+  default_inner_width: null
+  default_inner_height: null
+
+condition_rules:
+  - pattern: "demo_video"
+    condition: "demo"
+    video_length_seconds: 5.0
+    match_field: "stimname"
+    case_sensitive: false
+    use_regex: false
+
+preprocess:
+  median_kernel: 7
+  median_method: "scipy_medfilt"
+  drift_mode: "mean"
+
+  quadrant_method: "midpoint"
+  allow_midpoint_fallback: false
+  x_prob_threshold: 0.9
+  y_prob_threshold: 0.7
+  random_state: 0
+
+  bin_seconds: 0.5
+  resample_edge_policy: "notebook_strict"
+  resample_include_endpoint: true
+
+quadrant_image_qc:
+  enabled: false
+  q1_pattern: "top:25%; left:25%"
+  q2_pattern: "top:25%; right:25%"
+  q3_pattern: "bottom:25%; left:25%"
+  q4_pattern: "bottom:25%; right:25%"
+
+output_naming:
+  template: "videoview_window_{id}_{session}_{condition}.csv"
+  add_trial_index_suffix: false
+
+privacy:
+  hash_subject_ids: false
+  hash_salt_env: "ALABWEBGAZER_HASH_SALT"

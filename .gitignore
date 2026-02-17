@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.so
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Environments
+.venv/
+venv/
+
+# Tool caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+**/.mypy_cache/
+**/.pytest_cache/
+**/.ruff_cache/
+
+# Runtime artifacts
+runs/
+runs_preprocess/
+runs_tables/
+runs_analysis_ready/
+runs_pipeline/
+outputs/
+tmp/
+temp/
+*.tmp
+*.bak
+*.log
+artifacts/
+reports/
+
+# Data policy: never commit private/raw data
+data/
+**/data_raw/
+**/data_private/
+
+# OS
+.DS_Store
+Thumbs.db

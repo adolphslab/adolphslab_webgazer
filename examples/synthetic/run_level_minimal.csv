@@ -1,0 +1,5 @@
+SID,Video,task,Group,Sex,use_run,n_switches,n_contig_steps
+S001,V1,task5_pro,Control,Female,true,48,219
+S002,V1,task5_pro,ASD,Male,true,53,214
+S003,V1,task5_pro,SPARK,Female,true,55,209
+S004,V1,task5_pro,NonASD_Psych,Male,true,49,224

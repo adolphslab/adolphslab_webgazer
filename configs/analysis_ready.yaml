@@ -1,0 +1,63 @@
+# Analysis-ready modeling template.
+# This file points to bundled synthetic CSVs sized for stable demo model fitting.
+
+run:
+  run_id: "demo_analysis_ready"
+  random_seed: 12345
+  sap_name: "SAP_implemented_all"
+  sap_version: "demo"
+  notes: "Demo config. For real runs, point paths.* to Stage 2 table outputs."
+
+paths:
+  feature_long_csv: "../examples/synthetic/feature_runlevel_demo.csv"
+  run_level_csv: "../examples/synthetic/run_level_demo.csv"
+  output_root: "../runs_analysis_ready"
+
+filters:
+  tasks_keep: ["task5_pro"]
+  use_run_only: true
+  groups_keep: ["Control", "ASD", "SPARK", "NonASD_Psych"]
+  sex_keep: ["Female", "Male"]
+  design_videos: ["V1", "V2"]
+
+confirmatory:
+  contrasts:
+    - ["Control", "ASD"]
+    - ["Control", "SPARK"]
+    - ["ASD", "SPARK"]
+  endpoints:
+    H1_speaker:
+      table: "feature_long"
+      feature_filter: ["speaker"]
+      successes_col: "dwell_bins"
+      trials_col: "n_present_any_valid"
+      predictors: ["Group", "Video", "Sex"]
+    H2_distraction_offspeaker:
+      table: "feature_long"
+      feature_filter: ["distraction_offspeaker"]
+      successes_col: "dwell_bins"
+      trials_col: "n_present_any_valid"
+      predictors: ["Group", "Video", "Sex"]
+    H1a_averted_interaction:
+      table: "feature_long"
+      feature_filter: ["speaker_not_averted", "speaker_averted"]
+      state_col: "State"
+      successes_col: "dwell_bins"
+      trials_col: "n_present_any_valid"
+      predictors: ["Group", "State", "Group:State", "Video", "Sex"]
+    H3_switching_overall:
+      table: "run_level"
+      successes_col: "n_switches"
+      trials_col: "n_contig_steps"
+      predictors: ["Group", "Video", "Sex"]
+
+models:
+  primary_backend: "gee_exchangeable"
+  cluster_col: "SID"
+  bootstrap:
+    enabled: false
+    n_resamples: 500
+    seed: 12345
+
+multiplicity:
+  method: "bh_fdr"
