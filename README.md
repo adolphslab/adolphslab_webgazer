@@ -11,6 +11,8 @@ The pipeline is organized into explicit stages:
 Each stage writes auditable artifacts, including config snapshots, input hashes,
 structured logs, and run manifests.
 
+Note: This repository is a work in progress, with many aspects likely to undergo changes or updates.
+
 ## Table of Contents
 
 - [Overview](#overview)
